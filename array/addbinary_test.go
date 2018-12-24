@@ -1,4 +1,4 @@
-package plusone
+package array
 
 import (
 	"strconv"

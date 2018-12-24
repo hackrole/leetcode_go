@@ -8,7 +8,7 @@ func isPalindrome(head *ListNode) bool {
 
 	for tmp != nil {
 		mid = mid.Next
-		if mid == nil {
+		if tmp.Next == nil {
 			// 奇数长度list, false
 			return false
 		}
@@ -29,20 +29,19 @@ func isPalindrome(head *ListNode) bool {
 }
 
 func reverseLinkList(head *ListNode) *ListNode {
-	tmp := head
-	prev := tmp
-	next := tmp.Next
+	var prev, next *ListNode
+	next = head
 
-	for tmp != nil {
-		prev = tmp
-		tmp = next
-		next = tmp.Next
-		tmp.Next = prev
+	for next != nil {
+		next = head.Next
+		head.Next = prev
+		prev = head
+		head = next
 	}
-	return tmp
+	return prev
 }
 
-func TestisPalindrome(t *testing.T) {
+func TestIsPalindrome(t *testing.T) {
 	ll := &ListNode{
 		Val: 1,
 		Next: &ListNode{
@@ -56,7 +55,7 @@ func TestisPalindrome(t *testing.T) {
 	}
 }
 
-func TestisPalindrome2(t *testing.T) {
+func TestIsPalindrome2(t *testing.T) {
 	ll := &ListNode{
 		Val: 1,
 		Next: &ListNode{
@@ -76,7 +75,7 @@ func TestisPalindrome2(t *testing.T) {
 	}
 }
 
-func TestisPalindrome3(t *testing.T) {
+func TestIsPalindrome3(t *testing.T) {
 	ll := &ListNode{
 		Val: 1,
 		Next: &ListNode{
@@ -88,6 +87,48 @@ func TestisPalindrome3(t *testing.T) {
 	}
 
 	dut := isPalindrome(ll)
+	if dut != false {
+		t.Fatal("fail")
+	}
+}
+
+func TestIsPalindrome4(t *testing.T) {
+	ll := &ListNode{
+		Val: 1,
+		Next: &ListNode{
+			Val: 0,
+			Next: &ListNode{
+				Val: 0,
+			},
+		},
+	}
+
+	dut := isPalindrome(ll)
+
+	if dut != false {
+		t.Fatal("fail")
+	}
+}
+
+func TestIsPalindrome5(t *testing.T) {
+	ll := &ListNode{
+		Val: 1,
+		Next: &ListNode{
+			Val: 2,
+			Next: &ListNode{
+				Val: 2,
+				Next: &ListNode{
+					Val: 2,
+					Next: &ListNode{
+						Val: 1,
+					},
+				},
+			},
+		},
+	}
+
+	dut := isPalindrome(ll)
+
 	if dut != false {
 		t.Fatal("fail")
 	}
